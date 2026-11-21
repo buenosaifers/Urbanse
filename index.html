@@ -521,9 +521,9 @@ footer .kicker{display:block;margin-bottom:6px}
 <section id="bio" class="bio" aria-label="Bio">
   <div class="wrap">
     <span class="mark" aria-hidden="true"></span><span class="kicker">Bio</span>
-    <p class="bio-lead">MC y compositor del sur de Buenos Aires. Casi veinte años escribiendo rap lírico y conceptual, de raíz boom bap y underground.</p>
-    <p class="bio-txt">Se formó en el movimiento Halabalusa y en la crew La Conección Real. Encuentra la poesía en lo cotidiano y une a la vieja escuela, que busca lírica y concepto, con las nuevas audiencias de la cultura hip-hop. Su obra va de Puño Arriba y Literal a Faina, IV Mundo con Jonas Sanche y Decisiones con Norick.</p>
-    <p class="bio-live">En vivo: Argentina · Chile · Colombia · Uruguay · Perú</p>
+    <p class="bio-lead" data-texto="bio_intro">MC y compositor del sur de Buenos Aires. Casi veinte años escribiendo rap lírico y conceptual, de raíz boom bap y underground.</p>
+    <p class="bio-txt" data-texto="bio_texto">Se formó en el movimiento Halabalusa y en la crew La Conección Real. Encuentra la poesía en lo cotidiano y une a la vieja escuela, que busca lírica y concepto, con las nuevas audiencias de la cultura hip-hop. Su obra va de Puño Arriba y Literal a Faina, IV Mundo con Jonas Sanche y Decisiones con Norick.</p>
+    <p class="bio-live" data-texto="bio_en_vivo">En vivo: Argentina · Chile · Colombia · Uruguay · Perú</p>
   </div>
 </section>
 
@@ -546,7 +546,7 @@ footer .kicker{display:block;margin-bottom:6px}
 
 <!-- FRASE -->
 <section class="frase" aria-label="Frase">
-  <div class="wrap"><p>La poesía está en lo cotidiano.</p></div>
+  <div class="wrap"><p data-texto="frase">La poesía está en lo cotidiano.</p></div>
 </section>
 
 <!-- MÚSICA -->
@@ -1114,6 +1114,15 @@ function renderAll(data){
   renderShows(data.fechas || []);
   renderMerch(data.merch || []);
   renderSocials();
+  renderTextos(data.textos || {});
+}
+/* Textos editables desde la pestaña "Textos" del Sheet (vacío = queda el texto de la web) */
+function renderTextos(t){
+  document.querySelectorAll("[data-texto]").forEach(el => {
+    const v = String(t[el.dataset.texto] || "").trim(); if(!v) return;
+    if(el.classList.contains("rv-words")) el.innerHTML = v.split(/\s+/).map((w,i) => `<span class="w" style="--i:${i}">${esc(w)}</span>`).join(" ");
+    else el.textContent = v;
+  });
 }
 
 /* ---------- Navegación: sección activa y barra ---------- */

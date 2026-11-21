@@ -31,6 +31,7 @@ const TABS = {
   Videos:  ["titulo", "youtube_url", "tipo", "fecha", "descripcion", "link_escuchar", "destacado", "publicar", "ft", "verso"],
   Merch:   ["producto", "detalle", "tipo", "precio", "imagen_url", "imagen_url_2", "talles", "color", "tinta", "link_compra", "estado", "publicar", "lanzamiento", "stock"],
   Redes:   ["red", "url"],
+  Textos:  ["clave", "texto", "dónde aparece"],
   Booking: ["recibido", "motivo", "nombre", "organizacion", "email", "whatsapp", "ciudad", "pais", "tipo_evento",
             "formato", "fecha_tentativa", "venue_capacidad", "presupuesto", "mensaje", "origen", "estado_seguimiento", "notas"],
   "Ciudades pedidas": ["recibido", "ciudad", "pais", "email", "origen"],
@@ -38,6 +39,13 @@ const TABS = {
   "Pedidos merch": ["recibido", "pedido", "producto", "talle", "cantidad", "precio", "total", "nombre", "telefono", "email",
                     "entrega", "empresa_envio", "direccion", "ciudad", "provincia", "cp", "pais", "pago", "notas", "origen", "estado", "seguimiento"]
 };
+/* Textos de la web que se editan desde el Sheet (clave → texto). Si una celda queda vacía, la web usa su texto original. */
+const TEXTOS_DEFAULT = [
+  ["bio_intro", "MC y compositor del sur de Buenos Aires. Casi veinte años escribiendo rap lírico y conceptual, de raíz boom bap y underground.", "Bio: primera frase, en grande"],
+  ["bio_texto", "Se formó en el movimiento Halabalusa y en la crew La Conección Real. Encuentra la poesía en lo cotidiano y une a la vieja escuela, que busca lírica y concepto, con las nuevas audiencias de la cultura hip-hop. Su obra va de Puño Arriba y Literal a Faina, IV Mundo con Jonas Sanche y Decisiones con Norick.", "Bio: párrafo"],
+  ["bio_en_vivo", "En vivo: Argentina · Chile · Colombia · Uruguay · Perú", "Bio: línea de países"],
+  ["frase", "La poesía está en lo cotidiano.", "Frase en rojo entre Videos y Música"]
+];
 const ESTADOS_PEDIDO = ["Nuevo", "Confirmado", "Pagado", "Enviado", "Entregado", "Cancelado"];
 
 const REDES_DEFAULT = ["instagram", "tiktok", "youtube", "spotify", "x", "facebook"];
@@ -62,6 +70,10 @@ function setup() {
       });
     }
   });
+  // Textos: precarga los textos actuales de la web para editarlos
+  const tx = ss.getSheetByName("Textos");
+  if (tx.getLastRow() === 1) tx.getRange(2, 1, TEXTOS_DEFAULT.length, 3).setValues(TEXTOS_DEFAULT).setWrap(true);
+  tx.setColumnWidth(2, 520);
   // Redes: precarga la lista de redes para que solo pegues las URLs
   const redes = ss.getSheetByName("Redes");
   if (redes.getLastRow() === 1) {
@@ -113,6 +125,7 @@ function doGet() {
     videos: rows_(ss, "Videos"),
     merch:  rows_(ss, "Merch"),
     redes:  redes,
+    textos: textos_(ss),
     demanda: demanda_(ss)   // solo ciudad y cantidad; nunca se publican emails
   });
   cache.put("data", out, CACHE_SECONDS);
@@ -237,6 +250,12 @@ function pedidoPost_(p) {
     });
   }
   return json_(JSON.stringify({ ok: true }));
+}
+
+function textos_(ss) {
+  const o = {};
+  rows_(ss, "Textos").forEach(r => { const k = String(r.clave || "").trim(); if (k) o[k] = String(r.texto || "").trim(); });
+  return o;
 }
 
 /* Suma pedidos por ciudad (ignora mayúsculas y tildes) y devuelve las 8 con más pedidos */
