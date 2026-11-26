@@ -330,28 +330,28 @@ dialog.ped::backdrop{background:rgba(0,0,0,.72)}
 .fab.on{transform:none;opacity:1;pointer-events:auto}
 .fab-menu[hidden]{display:none}
 /* boleto de papel con troquel: muescas arriba y abajo en la línea de corte */
-.tk{--cut:calc(100% - 64px);position:relative;display:flex;align-items:stretch;text-align:left;border:0;padding:0;cursor:pointer;color:var(--ink);text-decoration:none;font:inherit;
+.tk{--cut:calc(100% - 34px);position:relative;display:flex;align-items:stretch;text-align:left;border:0;padding:0;cursor:pointer;color:var(--ink);text-decoration:none;font:inherit;
   background:var(--paper) linear-gradient(transparent 0 0);
-  -webkit-mask:radial-gradient(circle 9px at var(--cut) 0,#0000 98%,#000) top/100% 51% no-repeat,radial-gradient(circle 9px at var(--cut) 100%,#0000 98%,#000) bottom/100% 51% no-repeat;
-          mask:radial-gradient(circle 9px at var(--cut) 0,#0000 98%,#000) top/100% 51% no-repeat,radial-gradient(circle 9px at var(--cut) 100%,#0000 98%,#000) bottom/100% 51% no-repeat}
+  -webkit-mask:radial-gradient(circle 5px at var(--cut) 0,#0000 98%,#000) top/100% 51% no-repeat,radial-gradient(circle 5px at var(--cut) 100%,#0000 98%,#000) bottom/100% 51% no-repeat;
+          mask:radial-gradient(circle 5px at var(--cut) 0,#0000 98%,#000) top/100% 51% no-repeat,radial-gradient(circle 5px at var(--cut) 100%,#0000 98%,#000) bottom/100% 51% no-repeat}
 .fab .tk-wrap,.fab-btn,.fab-opt{filter:drop-shadow(0 8px 14px rgba(0,0,0,.45))}
-.tk-main{display:flex;flex-direction:column;justify-content:center;gap:3px;padding:11px 18px 11px 16px;border-left:6px solid var(--red)}
+.tk-main{display:flex;align-items:center;padding:8px 12px 8px 10px;border-left:4px solid var(--red)}
 .tk-main i{font:600 11px ui-monospace,Menlo,Consolas,monospace;font-style:normal;color:#6b6760;white-space:nowrap}
-.tk-main b{font:900 18px/1 var(--display);white-space:nowrap}
-.tk-stub{width:64px;flex:none;display:grid;place-items:center;align-content:center;border-left:2px dashed #b9b4aa;font:800 18px/1 ui-monospace,Menlo,Consolas,monospace;color:var(--red)}
+.tk-main b{font:800 14px/1 var(--display);white-space:nowrap}
+.tk-stub{width:34px;flex:none;display:grid;place-items:center;border-left:1.5px dashed #b9b4aa;font:800 14px/1 var(--display);color:var(--red)}
 .tk-stub em{display:block;font:600 10px ui-monospace,Menlo,Consolas,monospace;font-style:normal;color:#6b6760;margin-bottom:2px}
-.fab-btn{transform:rotate(-2deg);transition:transform .2s}
+.fab-btn{transform:rotate(-1.5deg);transition:transform .2s}
 .fab-btn:hover,.fab-btn[aria-expanded="true"]{transform:rotate(0) translateY(-2px)}
 .fab-btn[aria-expanded="true"] .tk-stub{background:var(--red);color:var(--ink);border-left-color:var(--ink)}
 .fab-btn:focus-visible,.fab-opt:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
-.fab-menu{display:flex;flex-direction:column;align-items:flex-start;gap:6px;margin-left:8px}
+.fab-menu{display:flex;flex-direction:column;align-items:flex-start;gap:5px;margin-left:4px}
 .fab-opt{transform:rotate(var(--r,0deg));animation:tkOut .35s cubic-bezier(.2,.9,.25,1.2) both}
 .fab-opt:nth-child(2){animation-delay:.06s}
-.fab-opt .tk-main b{font-size:16px}
-.fab-opt .tk-stub{width:48px}.fab-opt{--cut:calc(100% - 48px)}
+.fab-opt .tk-main b{font-size:14px}
+.fab-opt .tk-stub{width:30px}.fab-opt{--cut:calc(100% - 30px)}
 .fab-opt:hover .tk-stub,.fab-opt:focus-visible .tk-stub{background:var(--red);color:var(--ink)}
 @keyframes tkOut{from{opacity:0;transform:translateY(24px) rotate(-8deg)}}
-@media (max-width:899px){.fab{left:10px;bottom:calc(66px + env(safe-area-inset-bottom))}.tk-main b{font-size:16px}.tk-main{padding:9px 14px 9px 12px}}
+@media (max-width:899px){.fab{left:10px;bottom:calc(64px + env(safe-area-inset-bottom))}}
 @media (prefers-reduced-motion:reduce){.fab{transition:opacity .2s;transform:none}.fab-opt{animation:none}}
 .cartbtn{position:fixed;right:16px;bottom:16px;z-index:60;display:flex;align-items:center;gap:10px;padding:12px 16px;background:var(--red);color:var(--ink);border:0;font:800 15px var(--display);cursor:pointer;box-shadow:0 6px 24px rgba(0,0,0,.45)}
 .cartbtn[hidden]{display:none}
@@ -684,12 +684,12 @@ footer .kicker{display:block;margin-bottom:6px}
 
 <div class="fab" id="fab" aria-hidden="true">
   <div class="fab-menu" id="fabMenu" hidden>
-    <a href="booking.html#solicitud" class="tk fab-opt" style="--r:-2deg"><span class="tk-main"><i>Booking · Promotores y marcas</i><b>Contratar a Urbanse</b></span><span class="tk-stub">→</span></a>
-    <button type="button" class="tk fab-opt" data-fab-ask style="--r:1.5deg"><span class="tk-main"><i>Fans · Tu ciudad</i><b>Que venga a mi ciudad</b></span><span class="tk-stub">→</span></button>
+    <a href="booking.html#solicitud" class="tk fab-opt" style="--r:-1deg"><span class="tk-main"><b>Contratar a Urbanse</b></span><span class="tk-stub">→</span></a>
+    <button type="button" class="tk fab-opt" data-fab-ask style="--r:1deg"><span class="tk-main"><b>Que venga a mi ciudad</b></span><span class="tk-stub">→</span></button>
   </div>
   <button type="button" class="tk fab-btn" id="fabBtn" aria-expanded="false" aria-controls="fabMenu" tabindex="-1">
-    <span class="tk-main"><i>Pase de gira · 2026 — 2027</i><b>Llévalo a tu ciudad</b></span>
-    <span class="tk-stub"><em>Nº</em>001</span>
+    <span class="tk-main"><b>Llévalo a tu ciudad</b></span>
+    <span class="tk-stub" aria-hidden="true">↗</span>
   </button>
 </div>
 <button type="button" class="cartbtn" id="cartBtn" hidden data-cart><span>Ver pedido</span><b id="cartN">0</b><i id="cartT"></i></button>
