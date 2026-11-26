@@ -325,18 +325,34 @@ dialog.ped::backdrop{background:rgba(0,0,0,.72)}
 .ped-items .empty{display:block;color:var(--gray);padding:14px 0}
 .ped-total{display:flex;justify-content:space-between;padding:12px 0;font:700 16px var(--display)}.ped-total b{font-size:20px}
 .ped .more{background:none;border:1px dashed var(--line);color:var(--paper);width:100%;padding:12px;font:700 14px var(--display);cursor:pointer;margin-bottom:18px}
-.fab{position:fixed;left:16px;bottom:16px;z-index:59;display:flex;flex-direction:column;align-items:flex-start;gap:8px}
-.fab[hidden],.fab-menu[hidden]{display:none}
-.fab-btn{display:flex;align-items:center;gap:8px;padding:12px 16px;background:var(--ink);color:var(--paper);border:2px solid var(--ink);font:800 15px var(--display);cursor:pointer;box-shadow:0 6px 24px rgba(0,0,0,.45);transition:transform .15s}
-.fab-btn svg{width:18px;height:18px;color:var(--red)}
-.fab-btn:hover,.fab-btn[aria-expanded="true"]{background:var(--paper);color:var(--ink)}
-.fab-menu{background:var(--ink);border-top:4px solid var(--red);box-shadow:0 10px 30px rgba(0,0,0,.5);min-width:260px;animation:fabIn .18s ease-out}
-@keyframes fabIn{from{opacity:0;transform:translateY(8px)}}
-.fab-opt{display:block;width:100%;text-align:left;padding:14px 16px;background:none;border:0;border-bottom:1px solid var(--line);color:var(--paper);text-decoration:none;cursor:pointer;font:inherit}
-.fab-opt:last-child{border-bottom:0}.fab-opt:hover,.fab-opt:focus-visible{background:var(--red);color:var(--ink);outline:none}
-.fab-opt b{display:block;font:800 16px var(--display)}.fab-opt span{font-size:13px;opacity:.8}
-@media (max-width:899px){.fab{left:12px;bottom:calc(64px + env(safe-area-inset-bottom))}.fab-btn{padding:11px 14px;font-size:14px}}
-@media (prefers-reduced-motion:reduce){.fab-menu{animation:none}}
+.fab{position:fixed;left:16px;bottom:16px;z-index:59;display:flex;flex-direction:column;align-items:flex-start;gap:6px;pointer-events:none;
+  transform:translateY(calc(100% + 40px)) rotate(-6deg);transform-origin:left bottom;opacity:0;transition:transform .55s cubic-bezier(.2,.9,.25,1.15),opacity .25s}
+.fab.on{transform:none;opacity:1;pointer-events:auto}
+.fab-menu[hidden]{display:none}
+/* boleto de papel con troquel: muescas arriba y abajo en la línea de corte */
+.tk{--cut:calc(100% - 64px);position:relative;display:flex;align-items:stretch;text-align:left;border:0;padding:0;cursor:pointer;color:var(--ink);text-decoration:none;font:inherit;
+  background:var(--paper) linear-gradient(transparent 0 0);
+  -webkit-mask:radial-gradient(circle 9px at var(--cut) 0,#0000 98%,#000) top/100% 51% no-repeat,radial-gradient(circle 9px at var(--cut) 100%,#0000 98%,#000) bottom/100% 51% no-repeat;
+          mask:radial-gradient(circle 9px at var(--cut) 0,#0000 98%,#000) top/100% 51% no-repeat,radial-gradient(circle 9px at var(--cut) 100%,#0000 98%,#000) bottom/100% 51% no-repeat}
+.fab .tk-wrap,.fab-btn,.fab-opt{filter:drop-shadow(0 8px 14px rgba(0,0,0,.45))}
+.tk-main{display:flex;flex-direction:column;justify-content:center;gap:3px;padding:11px 18px 11px 16px;border-left:6px solid var(--red)}
+.tk-main i{font:600 11px ui-monospace,Menlo,Consolas,monospace;font-style:normal;color:#6b6760;white-space:nowrap}
+.tk-main b{font:900 18px/1 var(--display);white-space:nowrap}
+.tk-stub{width:64px;flex:none;display:grid;place-items:center;align-content:center;border-left:2px dashed #b9b4aa;font:800 18px/1 ui-monospace,Menlo,Consolas,monospace;color:var(--red)}
+.tk-stub em{display:block;font:600 10px ui-monospace,Menlo,Consolas,monospace;font-style:normal;color:#6b6760;margin-bottom:2px}
+.fab-btn{transform:rotate(-2deg);transition:transform .2s}
+.fab-btn:hover,.fab-btn[aria-expanded="true"]{transform:rotate(0) translateY(-2px)}
+.fab-btn[aria-expanded="true"] .tk-stub{background:var(--red);color:var(--ink);border-left-color:var(--ink)}
+.fab-btn:focus-visible,.fab-opt:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+.fab-menu{display:flex;flex-direction:column;align-items:flex-start;gap:6px;margin-left:8px}
+.fab-opt{transform:rotate(var(--r,0deg));animation:tkOut .35s cubic-bezier(.2,.9,.25,1.2) both}
+.fab-opt:nth-child(2){animation-delay:.06s}
+.fab-opt .tk-main b{font-size:16px}
+.fab-opt .tk-stub{width:48px}.fab-opt{--cut:calc(100% - 48px)}
+.fab-opt:hover .tk-stub,.fab-opt:focus-visible .tk-stub{background:var(--red);color:var(--ink)}
+@keyframes tkOut{from{opacity:0;transform:translateY(24px) rotate(-8deg)}}
+@media (max-width:899px){.fab{left:10px;bottom:calc(66px + env(safe-area-inset-bottom))}.tk-main b{font-size:16px}.tk-main{padding:9px 14px 9px 12px}}
+@media (prefers-reduced-motion:reduce){.fab{transition:opacity .2s;transform:none}.fab-opt{animation:none}}
 .cartbtn{position:fixed;right:16px;bottom:16px;z-index:60;display:flex;align-items:center;gap:10px;padding:12px 16px;background:var(--red);color:var(--ink);border:0;font:800 15px var(--display);cursor:pointer;box-shadow:0 6px 24px rgba(0,0,0,.45)}
 .cartbtn[hidden]{display:none}
 .cartbtn b{display:grid;place-items:center;min-width:24px;height:24px;border-radius:12px;background:var(--ink);color:var(--paper);font-size:13px}
@@ -666,12 +682,15 @@ footer .kicker{display:block;margin-bottom:6px}
   </div>
 </section>
 
-<div class="fab" id="fab" hidden>
+<div class="fab" id="fab" aria-hidden="true">
   <div class="fab-menu" id="fabMenu" hidden>
-    <a href="booking.html#solicitud" class="fab-opt"><b>Contratar a Urbanse</b><span>Promotores, festivales y marcas</span></a>
-    <button type="button" class="fab-opt" data-fab-ask><b>Que venga a mi ciudad</b><span>Pídelo y te avisamos cuando haya fecha</span></button>
+    <a href="booking.html#solicitud" class="tk fab-opt" style="--r:-2deg"><span class="tk-main"><i>Booking · Promotores y marcas</i><b>Contratar a Urbanse</b></span><span class="tk-stub">→</span></a>
+    <button type="button" class="tk fab-opt" data-fab-ask style="--r:1.5deg"><span class="tk-main"><i>Fans · Tu ciudad</i><b>Que venga a mi ciudad</b></span><span class="tk-stub">→</span></button>
   </div>
-  <button type="button" class="fab-btn" id="fabBtn" aria-expanded="false" aria-controls="fabMenu"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6a2.5 2.5 0 0 1 0 5.5Z"/></svg>Llévalo a tu ciudad</button>
+  <button type="button" class="tk fab-btn" id="fabBtn" aria-expanded="false" aria-controls="fabMenu" tabindex="-1">
+    <span class="tk-main"><i>Pase de gira · 2026 — 2027</i><b>Llévalo a tu ciudad</b></span>
+    <span class="tk-stub"><em>Nº</em>001</span>
+  </button>
 </div>
 <button type="button" class="cartbtn" id="cartBtn" hidden data-cart><span>Ver pedido</span><b id="cartN">0</b><i id="cartT"></i></button>
 <p class="carttoast" id="cartToast" role="status" aria-live="polite"></p>
@@ -945,8 +964,9 @@ $("listaForm").addEventListener("submit", async e => {
     if(!e.target.closest("#fab")) toggle(false);
   });
   document.addEventListener("keydown", e => { if(e.key === "Escape") toggle(false); });
-  if("IntersectionObserver" in window) new IntersectionObserver(es => { const v = es[0].isIntersecting; fab.hidden = !v; if(!v) toggle(false); }, {threshold:0.15}).observe(sec);
-  else fab.hidden = false;
+  const show = v => { fab.classList.toggle("on", v); fab.setAttribute("aria-hidden", v ? "false" : "true"); btn.tabIndex = v ? 0 : -1; if(!v) toggle(false); };
+  if("IntersectionObserver" in window) new IntersectionObserver(es => show(es[0].isIntersecting), {threshold:0.15}).observe(sec);
+  else show(true);
 })();
 
 /* ---------- Pedido de merch: carrito → formulario → planilla (control) + WhatsApp ---------- */
